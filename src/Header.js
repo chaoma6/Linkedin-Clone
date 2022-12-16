@@ -7,15 +7,25 @@ import GroupIcon from '@mui/icons-material/Group';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import MessageIcon from '@mui/icons-material/Message';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useDispatch } from 'react-redux';
+import { logout } from './features/userSlice';
+import { auth } from './firebase';
 
 function Header() {
+	const dispatch = useDispatch();
+
+	const logoutOfApp = () => {
+		dispatch(logout());
+		auth.signOut();
+	};
+
 	return (
 		<div className='header'>
 			<div className='header__left'>
 				<img src='https://cdn-icons-png.flaticon.com/512/3536/3536505.png' alt='linkedin logo' />
 				<div className='header__search'>
 					<SearchIcon />
-					<input type='text' />
+					<input type='text' placeholder='Search' />
 				</div>
 			</div>
 			<div className='header__right'>
@@ -24,7 +34,7 @@ function Header() {
 				<HeaderOption Icon={BusinessCenterIcon} title='Jobs' />
 				<HeaderOption Icon={MessageIcon} title='Messaging' />
 				<HeaderOption Icon={NotificationsIcon} title='Notifications' />
-				<HeaderOption avatar='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjx_d3NrogyyO9eXj_4N2gSeCWOHWPInqvcxB0u98&s' title='me' />
+				<HeaderOption onClick={logoutOfApp} avatar={true} title='me ' />
 			</div>
 		</div>
 	);
